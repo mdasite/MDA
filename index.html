@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>אבטחות מד"א אדומים</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+      }
+
+      header {
+        background-color: #d32f2f;
+        color: white;
+        padding: 1em 2em;
+        position: relative;
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 2.2em;
+      }
+
+      .nav-button-top {
+        position: absolute;
+        right: 2em;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: white;
+        color: #d32f2f;
+        padding: 0.6em 1.2em;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 1em;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .nav-button-top:hover {
+        background-color: #ffcdd2;
+        color: #b71c1c;
+      }
+
+      .filter-bar {
+        background-color: #c8e0ff;
+        padding: 1em 2em;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1em;
+        justify-content: center;
+      }
+
+      .filter-button {
+        padding: 0.5em 1.2em;
+        background-color: #d32f2f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .filter-button:hover {
+        background-color: #b71c1c;
+        transform: scale(1.05);
+      }
+
+      .filter-button.active {
+        background-color: white;
+        color: #d32f2f;
+        border: 2px solid #d32f2f;
+      }
+
+      .filter-bar input[type="text"] {
+        padding: 0.5em;
+        border-radius: 4px;
+        border: 1px solid #999;
+        font-size: 1em;
+      }
+
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        padding: 2em;
+        justify-content: center;
+      }
+
+      a.card-link {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .card {
+        width: 300px;
+        padding: 1em;
+        border-radius: 10px;
+        color: white;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+        transition: transform 0.2s;
+      }
+
+      .card h3 {
+        margin-top: 0;
+        font-size: 1.3em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        padding-bottom: 0.5em;
+      }
+
+      .card p {
+        margin: 0.3em 0;
+      }
+
+      .card.full {
+        background-color: #4caf50; /* ירוק */
+      }
+
+      .card.available {
+        background-color: #2196f3; /* כחול */
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="login.html" class="nav-button-top">ניהול אבטחות</a>
+      <h1>אבטחות מד״א אדומים</h1>
+    </header>
+
+    <div class="filter-bar">
+      <button class="filter-button active" onclick="filterCards('all', this)">
+        כל האבטחות
+      </button>
+      <button class="filter-button" onclick="filterCards('available', this)">
+        אבטחות פנויות
+      </button>
+      <input
+        type="text"
+        id="search"
+        placeholder="חיפוש אבטחה..."
+        oninput="searchCards()"
+      />
+    </div>
+
+    <div class="cards" id="cards-container">
+      <a href="details.html?id=1" class="card-link">
+        <div class="card full">
+          <h3>אירוע "רצים לירושלים"</h3>
+          <p><strong>תאריך:</strong> 02/05/2025</p>
+          <p><strong>שעות:</strong> 08:00 - 13:00</p>
+          <p><strong>מיקום:</strong> גבעת התחמושת</p>
+          <p><strong>הערות:</strong> נקודת מים תופעל בשטח</p>
+          <p><strong>חוסרים:</strong> אין – האבטחה מלאה</p>
+        </div>
+      </a>
+
+      <a href="details.html?id=2" class="card-link">
+        <div class="card available">
+          <h3>שוק קהילתי – פסגת זאב</h3>
+          <p><strong>תאריך:</strong> 03/05/2025</p>
+          <p><strong>שעות:</strong> 17:00 - 22:00</p>
+          <p><strong>מיקום:</strong> מרכז המסחרי הישן</p>
+          <p><strong>הערות:</strong> כולל פריסת אוהל</p>
+          <p><strong>חוסרים:</strong> חסרים 2 מתנדבים</p>
+        </div>
+      </a>
+
+      <a href="details.html?id=3" class="card-link">
+        <div class="card available">
+          <h3>מרוץ גני מעלה אדומים</h3>
+          <p><strong>תאריך:</strong> 04/05/2025</p>
+          <p><strong>שעות:</strong> 06:00 - 10:30</p>
+          <p><strong>מיקום:</strong> פארק המרכזי</p>
+          <p><strong>הערות:</strong> תחנת רענון ניידת</p>
+          <p><strong>חוסרים:</strong> חסר רכב חובש</p>
+        </div>
+      </a>
+    </div>
+
+    <script>
+      function filterCards(type, clickedButton) {
+        document
+          .querySelectorAll(".filter-button")
+          .forEach((btn) => btn.classList.remove("active"));
+        clickedButton.classList.add("active");
+
+        const cards = document.querySelectorAll(".cards .card");
+        cards.forEach((card) => {
+          if (type === "all") {
+            card.parentElement.classList.remove("hidden");
+          } else if (
+            type === "available" &&
+            card.classList.contains("available")
+          ) {
+            card.parentElement.classList.remove("hidden");
+          } else {
+            card.parentElement.classList.add("hidden");
+          }
+        });
+
+        document.getElementById("search").value = "";
+      }
+
+      function searchCards() {
+        const query = document
+          .getElementById("search")
+          .value.trim()
+          .toLowerCase();
+        const cards = document.querySelectorAll(".cards .card");
+        cards.forEach((card) => {
+          const title = card.querySelector("h3").innerText.toLowerCase();
+          if (title.includes(query)) {
+            card.parentElement.classList.remove("hidden");
+          } else {
+            card.parentElement.classList.add("hidden");
+          }
+        });
+        document
+          .querySelectorAll(".filter-button")
+          .forEach((btn) => btn.classList.remove("active"));
+      }
+    </script>
+  </body>
+</html>
