@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>עריכת אבטחה</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 2em;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0d47a1;
+    }
+
+    form {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 2em;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 1em;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.3em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      margin-top: 1.5em;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.6em 1.2em;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .save-button {
+      background-color: #2196f3;
+      color: white;
+    }
+
+    .save-button:hover {
+      background-color: #1976d2;
+    }
+
+    .report-button {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .report-button:hover {
+      background-color: #388e3c;
+    }
+
+    .delete-button {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .delete-button:hover {
+      background-color: #c62828;
+    }
+
+    .allocation-section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2em;
+      gap: 2em;
+    }
+
+    .allocation-box {
+      flex: 1;
+      background: linear-gradient(to left, #bbdefb, #e3f2fd);
+      padding: 1em;
+      border-radius: 8px;
+    }
+
+    .allocation-box h3 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .allocation-box label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.5em 0;
+    }
+
+    .allocation-box input[type="number"] {
+      width: 60px;
+    }
+  </style>
+</head>
+<body>
+  <h1>עריכת פרטי אבטחה</h1>
+  <form action="#" method="post">
+    <label for="name">שם האבטחה</label>
+    <input type="text" id="name" name="name" value="משחק הפועל ירושלים">
+
+    <label for="location">מיקום</label>
+    <input type="text" id="location" name="location" value="סדי">
+
+    <label for="date">תאריך</label>
+    <input type="date" id="date" name="date" value="2025-05-03">
+
+    <label for="start">שעת התחלה</label>
+    <input type="time" id="start" name="start" value="19:00">
+
+    <label for="end">שעת סיום</label>
+    <input type="time" id="end" name="end" value="22:00">
+
+    <label for="status">סטטוס</label>
+    <select id="status" name="status">
+      <option value="לביצוע" selected>לביצוע</option>
+      <option value="הושלם">הושלם</option>
+      <option value="בוטל">בוטל</option>
+    </select>
+
+    <label for="notes">הערות</label>
+    <textarea id="notes" name="notes" rows="3">הגעה מוקדמת</textarea>
+
+    <div class="allocation-section">
+      <div class="allocation-box">
+        <h3>הקצאות עובדים:</h3>
+        <label>לבן:<input type="number" name="staff_levan" value="0"></label>
+        <label>אט"ן:<input type="number" name="staff_aten" value="0"></label>
+        <label>נת"ן:<input type="number" name="staff_natan" value="0"></label>
+        <label>תאר"ן:<input type="number" name="staff_taran" value="0"></label>
+        <label>מייל:<input type="number" name="staff_mail" value="0"></label>
+        <label>רכב חפ"ק:<input type="number" name="staff_rapeq" value="0"></label>
+        <label>חפ"ק:<input type="number" name="staff_peq" value="0"></label>
+        <label>מפקד כוח:<input type="number" name="staff_commander" value="0"></label>
+      </div>
+
+      <div class="allocation-box">
+        <h3>הקצאות מתנדבים:</h3>
+        <label>לבן מתנדב:<input type="number" name="volunteer_levan" value="1"></label>
+        <label>אופנוע:<input type="number" name="volunteer_bike" value="0"></label>
+        <label>חובש:<input type="number" name="volunteer_medic" value="2"></label>
+        <label>מע"ר:<input type="number" name="volunteer_maar" value="2"></label>
+      </div>
+    </div>
+
+    <button type="submit" class="save-button">שמור שינויים</button>
+      <button type="button" class="save-button" onclick="alert('תבנית נשמרה בהצלחה')">צור תבנית</button>
+      <button type="button" class="report-button" onclick="alert('ניצור דוח בהמשך')">צור דו"ח</button>
+      <button type="button" class="delete-button" onclick="confirm('האם אתה בטוח שברצונך למחוק את האבטחה?')">מחק אבטחה</button>
+    </div>
+  </form>
+</body>
+</html>
