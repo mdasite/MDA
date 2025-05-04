@@ -1,41 +1,25 @@
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
-exports.handler = async (event, context) => {
-  // בדיקת סוג בקשה
-  if (event.httpMethod !== "POST") {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: "Method Not Allowed" }),
-    };
-  }
+exports.handler = async function(event, context) {
+  const body = JSON.parse(event.body);
+  const sheetUrl = 'https://script.google.com/macros/s/AKfycbx0ID3dcF8bNLtX4mVpK35nEh_I76mgcOJDuVfC5e6mQZnV95YsAbS5uOoUp_wpGUsfsw/exec';
 
   try {
-    // שלב 1: קבלת הנתונים מהטופס
-    const data = JSON.parse(event.body);
-    console.log("הנתונים שהתקבלו:", data);
-
-    // שלב 2: שליחה ל-Google Apps Script שלך
-    const scriptURL =
-      "https://script.google.com/macros/s/AKfycbx0ID3dcF8bNLtX4mVpK35nEh_I76mgcOJDuVfC5e6mQZnV95YsAbS5uOoUp_wpGUsfsw/exec";
-
-    const response = await fetch(scriptURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+    const res = await fetch(sheetUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
     });
 
-    const text = await response.text();
-    console.log("תגובת Google Apps Script:", text);
-
+    const result = await res.json();
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true, response: text }),
+      body: JSON.stringify(result)
     };
-  } catch (error) {
-    console.error("שגיאה ב-Netlify Function:", error.message);
+  } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: 'Failed to send to Google Apps Script', details: err.message })
     };
   }
 };
